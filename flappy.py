@@ -5,6 +5,8 @@ import sys
 import pygame
 from pygame.locals import *
 
+import mic
+
 
 FPS = 30
 SCREENWIDTH  = 288
@@ -184,6 +186,7 @@ def showWelcomeAnimation():
 
 
 def mainGame(movementInfo):
+    m = mic.Stream()
     score = playerIndex = loopIter = 0
     playerIndexGen = movementInfo['playerIndexGen']
     playerx, playery = int(SCREENWIDTH * 0.2), movementInfo['playery']
@@ -263,7 +266,10 @@ def mainGame(movementInfo):
         if playerFlapped:
             playerFlapped = False
         playerHeight = IMAGES['player'][playerIndex].get_height()
-        playery += min(playerVelY, BASEY - playery - playerHeight)
+        proposed_speed = -1*(m.getSpeed()-500)/100
+        print "speed: {0}".format(proposed_speed)
+        playery += min(proposed_speed, BASEY - playery - playerHeight)
+        #playery += min(playerVelY, BASEY - playery - playerHeight)
 
         # move pipes to left
         for uPipe, lPipe in zip(upperPipes, lowerPipes):
