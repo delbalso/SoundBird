@@ -1,7 +1,5 @@
 import pyaudio
-import time
 import numpy as np
-from matplotlib import pyplot as plt
 
 CHUNKSIZE = 1024 # fixed chunk size
 
